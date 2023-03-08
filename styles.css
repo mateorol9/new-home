@@ -1,0 +1,343 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+:root {
+    /*Títulos*/
+    --h1: 2.8rem;
+    --h2: 2.4rem;
+
+    /*Colores*/
+    --Soft-orange: hsl(35, 77%, 62%);
+    --Soft-red: hsl(5, 85%, 63%);
+    --Off-white: hsl(36, 100%, 99%);
+    --Grayish-blue: hsl(233, 8%, 79%);
+    --Dark-grayish-blue: hsl(236, 13%, 42%);
+    --Very-dark-blue: hsl(240, 100%, 5%);
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.4rem;
+    font-family: 'Inter', sans-serif;
+}
+body:has(.nav :checked) { /*Evita el scroll vertical al desplegar el menu en responsive*/
+    overflow-y: hidden;
+}
+
+.container {
+    display: grid;
+    gap: 30px;
+    grid-template-areas: 
+    "nav"
+    "main"
+    "sidebar"
+    "articles";
+
+    width: 90%;
+    padding-block-end: 60px;
+    max-width: 1250px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+.nav {
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    grid-template-columns: repeat(2, max-content);
+    height: 80px;
+
+    grid-template-areas: "logo icono";
+    grid-area: nav;
+}
+.nav:has( :checked) .nav__menu {
+    opacity: 1;
+    pointer-events: unset;
+}
+.nav__check {
+    display: none;
+}
+.nav__brand {
+    grid-area: logo;
+}
+
+.nav__logo {
+    display: inline-block;
+    width: 65px;
+    height: 40px;
+}
+.nav__menu {
+    display: grid;
+    gap: 3rem;
+    justify-self: end;
+    place-content: center;
+    position: absolute;
+    inset: 0;
+    padding: 0;
+
+    font-size: 2rem;
+    background-color: #fff;
+    list-style: none;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s;
+}
+.nav__item {
+    text-align: center;
+}
+.nav__link {
+    color: var(--Very-dark-blue);
+    text-decoration: none;
+}
+.nav__item:hover .nav__link {
+    color: var(--Soft-red)
+}
+.burger__label {
+    cursor: pointer;
+}
+.burger__box {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 24px;
+    
+    grid-area: icono;
+    z-index: 10;
+}
+.buger__lines {
+    position: absolute;
+    width: 40px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: #000;
+
+    top: 50%;
+    display: block;
+    margin-top: -2px;
+
+    transition: top 75ms ease, transform .3s;
+}
+.buger__lines::before {
+    position: absolute;
+    content: "";
+    top: -10px;
+    width: 40px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: inherit;
+    
+}
+.buger__lines::after {
+    position: absolute;
+    content: "";
+    bottom: -10px;
+    width: 40px;
+    height: 4px;
+    border-radius: 4px;
+    background-color: inherit;   
+}
+.nav:has( :checked) .buger__lines {
+    transform: rotate(45deg);
+    
+}
+.nav:has( :checked) .buger__lines::before {
+    top: 0;
+    opacity: 0;
+}
+.nav:has( :checked) .buger__lines::after {
+    top: 0;    
+    transform: rotate(90deg);   
+}
+
+/*Main section*/
+
+.main {
+    grid-area: main;
+}
+.main__bg {
+    width: 100%;
+    height: 300px;
+    background-image: url(./assets/images/image-web-3-mobile.jpg);
+    background-size: cover;
+    background-position: center;
+}
+.main__texts{
+    margin-block-start: 24px;
+}
+.main__title {
+    font-size: var(--h1);
+    color: var(--Very-dark-blue);
+}
+.main__paragraph {
+    margin: 1.4rem 0;
+    line-height: 2rem;
+    color: var(--Dark-grayish-blue);
+}
+.main__cta {
+    display: inline-block;
+    padding: 1.2rem 2.8rem;
+    font-weight: 700;
+    color: #fff;
+    background-color: var(--Soft-red);
+    text-transform: uppercase;
+    text-decoration: none;
+}
+.main__cta:hover {
+    background-color: var(--Very-dark-blue);
+}
+
+/*Sidebar*/
+
+.sidebar {
+    background-color: var(--Very-dark-blue);
+    color: #fff;
+    padding: 2rem;
+    grid-area: sidebar;
+
+}
+.sidebar__title {
+    margin-block-end: 24px;
+    font-size: var(--h2);
+    color: var(--Soft-orange)
+}
+.sidebar__article {
+    padding-block-end: 18px;
+    margin-block-end: 18px;
+    border-block-end: 1px solid var(--Dark-grayish-blue);
+}
+.sidebar__article:last-of-type {
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+.sidebar__link {
+    display: inline-block;
+    margin-block-end: 12px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+}
+.sidebar__link:hover {
+    color: var(--Soft-orange);
+}
+.sidebar__content {
+    line-height: 1.8rem;
+    color: var(--Grayish-blue);
+}
+
+/*Articles*/
+.articles {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+    grid-area: articles;
+}
+.articles__article {
+    display: flex;
+    gap: 20px;
+}
+.articles__figure {
+    width: 40%;
+    max-width: 140px;
+    aspect-ratio: 3/4;
+}
+.articles__img {
+    width: 100%;
+    height: 100%; 
+    object-fit: cover; 
+}
+.articles__texts {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 60%;
+    padding: 10px;
+}
+.articles__number {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: var(--Grayish-blue);
+}
+.articles__link {
+    display: inline-block;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--Very-dark-blue);
+    text-decoration: none;
+}
+.articles__link:hover {
+    color: var(--Soft-red);
+}
+.articles__content {
+    line-height: 1.8rem;
+    color: var(--Dark-grayish-blue);
+}
+
+/*Media querys*/
+
+@media (min-width:768px) {
+    body {
+        padding: 20px 20px;
+    }
+/*Nav - Visible */
+    .nav__menu {
+        display: flex;
+        gap: 40px;
+        justify-content: center;
+        align-items: center;
+        position: unset;
+        opacity: unset;
+        font-size: 1.4rem;
+        pointer-events: unset;
+    }
+    .nav__link {
+        color: var(--Dark-grayish-blue);
+    }
+    .burger__label {
+        display: none;
+}
+/*--------------------------------*/
+    .container {
+        grid-auto-columns: 1fr;
+        grid-template-areas: 
+        "nav nav nav nav nav"
+        "main main main sidebar sidebar"
+        "articles articles articles articles articles";
+        padding: 30px;
+        box-shadow: 0 0 15px #8080806b;
+}
+/*main media querys*/
+    .main__bg {
+    background-image: url(./assets/images/image-web-3-desktop.jpg);
+    }
+    .main__texts {
+        display: grid;
+        column-gap: 12px;
+        row-gap: 8px;
+        grid-template-areas: 
+        "titulo parrafo"
+        "titulo boton";
+    }
+    .main__title {
+        grid-area: titulo;
+        align-self: start;
+        font-size: 4rem;
+    }
+    .main__paragraph {
+        grid-area: parrafo;
+        align-self: start;
+        margin: 0;
+    }
+   .main__cta {
+    grid-area: boton;
+    align-self: end;
+    max-width: 150px;
+    text-align: center;
+   } 
+}
